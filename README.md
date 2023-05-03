@@ -7,9 +7,9 @@ Veterinaria 4IV10
    - Gomez Estrada Ángel Gabriel – AG
       - BackEnd 
    - Mora Espinoza Jorge Jesus – JJ
-      - Diseño e ídeas
+      - Diseño e ídeas – Tester
    - Rosillo Valencia Jared Eliu – JE
-      - Diseño e ídeas 
+      - Diseño e ídeas – Tester
    - Reynoso Juarez Ricardo Ulises – RU
       - FrontEnd 
    
