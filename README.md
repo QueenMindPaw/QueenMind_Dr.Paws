@@ -25,4 +25,5 @@ Veterinaria 4IV10
             - Fonts
             - Colores
             - Layouts
+            - Diseño grafico
 
