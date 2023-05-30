@@ -4,16 +4,16 @@
  */
 package ControladorServlet;
 
-import Model.Propietario;
+import Model.owner;
 import data_access_bd.BDConnection;
 import data_access_bd.PropietarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
             PropietarioDAO propietarioDAO = 
                     new PropietarioDAO(conexion, 
                             request.getServletContext());
-            Propietario propietario = new Propietario(
+            owner owner = new owner(
                     request.getParameter("correo"),
                     
                     request.getParameter("password")
@@ -54,11 +54,11 @@ public class LoginServlet extends HttpServlet {
             String password = request.getParameter("password");
             
             try{
-                propietario = propietarioDAO.login(propietario);
-                if(propietario != null){
+                owner = propietarioDAO.login(owner);
+                if(owner != null){
                     //creo la sesion
                     request.getSession().setAttribute(
-                            "propietario", propietario);
+                            "propietario", owner);
                     response.sendRedirect("inicio.jsp");
                 }else{
                     response.sendRedirect("login.jsp");
@@ -106,7 +106,7 @@ public class LoginServlet extends HttpServlet {
             request.getServletContext());
         
         //obtener los parametros
-        Propietario propietario = new Propietario(
+        owner owner = new owner(
                 request.getParameter("correo"),
                 request.getParameter("password")
         );        
@@ -115,11 +115,11 @@ public class LoginServlet extends HttpServlet {
         //dicho usuario
         
         try{
-            propietario = propietariodao.login(propietario);
-            if(propietario != null){
+            owner = propietariodao.login(owner);
+            if(owner != null){
                 //genero la sesion
                 request.getSession().setAttribute(
-                        "propietario", propietario);
+                        "propietario", owner);
                 response.sendRedirect("inicio.jsp");
             }else{
                 response.sendRedirect("login.jsp");

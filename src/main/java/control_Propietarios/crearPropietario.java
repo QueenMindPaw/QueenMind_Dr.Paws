@@ -1,52 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package control_Propietarios;
 
-import Model.Propietario;
+import Model.owner;
 import data_access_bd.BDConnection;
 import data_access_bd.PropietarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author alumno
- */
-public class crearPropietario extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class  crearPropietario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            //creo una instancia del propietario
-            
             //primero la conexion
-            Connection conexion = 
-                    BDConnection.getConnection(
-                            request.getServletContext());
+            Connection conexion = BDConnection.getConnection(request.getServletContext());
             //la instancia del propietario y sus accesos
-            PropietarioDAO propietarioDAO = 
-                    new PropietarioDAO(conexion, 
-                            request.getServletContext());
+            PropietarioDAO propietarioDAO = new PropietarioDAO(conexion, request.getServletContext());
             
-            Propietario propietario = new Propietario(
+            owner owner = new owner(
                     request.getParameter("correo"),
                     request.getParameter("nombre"),
                     request.getParameter("appat"),
@@ -56,7 +31,7 @@ public class crearPropietario extends HttpServlet {
             );
             
             try{
-                propietario = propietarioDAO.save(propietario);
+                owner = propietarioDAO.save(owner);
                 System.out.println("Propietario agregado");
                 response.sendRedirect("login.jsp");
             }catch(Exception e){

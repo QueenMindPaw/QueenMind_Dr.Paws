@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package data_access_bd;
 
-import Model.Mascota;
-import Model.Propietario;
+import Model.owner;
+import jakarta.servlet.ServletContext;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,12 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 
-/**
- *
- * @author alumno
- */
 public class PropietarioDAO {
     
       private Connection connection;
@@ -26,12 +18,11 @@ public class PropietarioDAO {
       private PreparedStatement insertStatement, updateStatement, 
             selectAllStatement, selectByIdStatement, 
               selectLoginStatement, deleteByIdStatement;
-      
-      private final String insertQuery = 
+      private final String insertQuery =
             "INSERT INTO propietario(correo, nombre, appat, apmat, dir, password) "
             + "VALUES (?,?,?,?,?,?)";
-    
-    private final String updateQuery = 
+
+    private final String updateQuery =
             "UPDATE propietario SET nombre = ?, appat = ?, "
             + "apmat = ?, dir = ? WHERE id_propietario = ?";
     
@@ -53,9 +44,9 @@ public class PropietarioDAO {
         this.connection = connection;
         
         try{
-            this.insertStatement = 
+            this.insertStatement =
                     this.connection.prepareStatement(
-                            this.insertQuery, 
+                            this.insertQuery,
                             Statement.RETURN_GENERATED_KEYS);
             this.updateStatement = 
                     this.connection.prepareStatement(this.updateQuery);
@@ -73,51 +64,51 @@ public class PropietarioDAO {
             System.out.println("Error " + e.getMessage());
         }
     }
-    
-    public Propietario save(Propietario propietario) throws Exception{
-        System.out.println(propietario.getId_propietario());
-        if(propietario.getId_propietario() == -1){
+
+    public owner save(owner owner) throws Exception{
+        System.out.println(owner.getId_propietario());
+        if(owner.getId_propietario() == -1){
             //que vamos a hacer para que el password sea seguro
             
             //pues que se inserte
-            this.insertStatement.setString(1, propietario.getCorreo());
-            this.insertStatement.setString(2, propietario.getNombre());
-            this.insertStatement.setString(3, propietario.getAppat());
-            this.insertStatement.setString(4, propietario.getApmat());
-            this.insertStatement.setString(5, propietario.getDir());
-            this.insertStatement.setString(6, propietario.getPassword());
+            this.insertStatement.setString(1, owner.getCorreo());
+            this.insertStatement.setString(2, owner.getNombre());
+            this.insertStatement.setString(3, owner.getAppat());
+            this.insertStatement.setString(4, owner.getApmat());
+            this.insertStatement.setString(5, owner.getDir());
+            this.insertStatement.setString(6, owner.getPassword());
             
             int idPropietario = this.insertStatement.executeUpdate();
             System.out.println("id del propietario es " + idPropietario);
             
-            propietario.setId_propietario(idPropietario);
+            owner.setId_propietario(idPropietario);
             
-            return propietario;
+            return owner;
         }else{
             //actualiar
             //this.insertStatement.setString(1, propietario.getCorreo());
-            this.updateStatement.setString(1, propietario.getNombre());
-            this.updateStatement.setString(2, propietario.getAppat());
-            this.updateStatement.setString(3, propietario.getApmat());
-            this.updateStatement.setString(4, propietario.getDir());
+            this.updateStatement.setString(1, owner.getNombre());
+            this.updateStatement.setString(2, owner.getAppat());
+            this.updateStatement.setString(3, owner.getApmat());
+            this.updateStatement.setString(4, owner.getDir());
             //this.insertStatement.setString(6, propietario.getPassword());
-            this.updateStatement.setInt(5, propietario.getId_propietario());
+            this.updateStatement.setInt(5, owner.getId_propietario());
             
             this.updateStatement.executeUpdate();
             
-            return propietario;
+            return owner;
             
         }
     }
     
     //consulta general
-    public List<Propietario> getAll() throws Exception{
-        List<Propietario> propietarioLista = new ArrayList<>();
+    public List<owner> getAll() throws Exception{
+        List<owner> ownerLista = new ArrayList<>();
         
         ResultSet rs = this.selectAllStatement.executeQuery();
         
         while(rs.next()){
-            Propietario propietario = new Propietario(
+            owner owner = new owner(
                     rs.getInt("id_propietario"),
                     rs.getString("correo"),
                     rs.getString("nombre"),
@@ -128,19 +119,19 @@ public class PropietarioDAO {
                     
             );
             
-            propietarioLista.add(propietario);
+            ownerLista.add(owner);
         }
-        return propietarioLista;
+        return ownerLista;
     }
     
-    public Propietario getbyId(int idPropietario) throws Exception{
+    public owner getbyId(int idPropietario) throws Exception{
         
         this.selectByIdStatement.setInt(1, idPropietario);
         
         ResultSet rs = this.selectByIdStatement.executeQuery();
         
         if(rs.next()){
-            Propietario propietario = new Propietario(
+            owner owner = new owner(
                    
                     rs.getInt("id_propietario"), 
                     rs.getString("correo"),
@@ -150,7 +141,7 @@ public class PropietarioDAO {
                     rs.getString("dir")
             );
             
-            return propietario;
+            return owner;
         }
         return null;
     }
@@ -164,17 +155,17 @@ public class PropietarioDAO {
     }
     
     //para verificar el usuario 
-    public Propietario login(Propietario propietario) throws SQLException {
-        this.selectLoginStatement.setString(1, propietario.getCorreo());
+    public owner login(owner owner) throws SQLException {
+        this.selectLoginStatement.setString(1, owner.getCorreo());
         ResultSet rs = this.selectLoginStatement.executeQuery();
         
         if(rs.next() && rs.getString("password")!=null){
-            propietario.getPassword();
+            owner.getPassword();
             rs.getString("password");
             
             System.out.println("Funciona wiiii");
             
-            Propietario propietarioLogin = new Propietario(
+            owner ownerLogin = new owner(
                     rs.getInt("id_propietario"),
                     rs.getString("correo"),
                     rs.getString("nombre"),
@@ -184,7 +175,7 @@ public class PropietarioDAO {
                     rs.getString("password")
             );
             
-            return propietarioLogin;
+            return ownerLogin;
             
         }
         return null;
