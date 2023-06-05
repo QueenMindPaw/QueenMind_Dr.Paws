@@ -1,5 +1,5 @@
-<%@page import="Model.owner" %>
-<%@ page import="Model.owner" %>
+<%@page import="Model.PersonDAO" %>
+<%@ page import="Model.PersonDAO" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <head>
@@ -18,7 +18,7 @@
     <nav>
         <ul>
             <li><a href="index.jsp">Inicio</a></li>
-            <% owner owner = null;
+            <% PersonDAO person = person.getPersonById();
                 if (owner != null) { %>
             <li><a href="profile.jsp">Profile</a></li>
             <% } %>

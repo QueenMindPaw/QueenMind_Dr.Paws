@@ -1,28 +1,75 @@
 package Model;
 
 public class person extends BDObject{
-    private int ownerID; // Auto-incremental in the database
-
-    public void owner(int ownerID, int personID) {
-        super(personID);
-        this.ownerID = ownerID;
+    private String name;
+    private String appat;
+    private String ammat;
+    private String email;
+    private String password;
+    
+    public person(){
     }
 
-    public void owner() {
+    public person(int id, String name, String appat, String ammat, String email, String password) {
+        super(id);
+        this.name = name;
+        this.appat = appat;
+        this.ammat = ammat;
+        this.email = email;
+        this.password = password;
     }
 
-
-    public void owner(int ownerID) {
+    public person(String name, String appat, String ammat, String email, String password) {
         super();
-        this.ownerID = ownerID;
+        this.name = name;
+        this.appat = appat;
+        this.ammat = ammat;
+        this.email = email;
+        this.password = password;
     }
 
-
-    public int getOwnerID() {
-        return ownerID;
+    public String getName() {
+        return name;
     }
 
-    public void setOwnerID(int ownerID) {
-        this.ownerID = ownerID;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAppat() {
+        return appat;
+    }
+
+    public void setAppat(String appat) {
+        this.appat = appat;
+    }
+
+    public String getAmmat() {
+        return ammat;
+    }
+
+    public void setAmmat(String ammat) {
+        this.ammat = ammat;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    @Override
+    public String toString(){
+        return "person{" + "id=" + getId() + ", name=" + name + ", appat=" + appat + ", ammat=" + ammat + ", email=" + email + ", password=" + password + '}';
     }
 }
