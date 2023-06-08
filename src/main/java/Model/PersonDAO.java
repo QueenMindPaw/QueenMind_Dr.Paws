@@ -10,6 +10,10 @@ import java.util.List;
 public class PersonDAO {
     private Connection connection;
 
+    public PersonDAO(Connection connection) {
+        this.connection = connection;
+    }
+
     public PersonDAO() {
         try {
             connection = DBConnection.getConnection();
@@ -77,6 +81,7 @@ public class PersonDAO {
 
     public person savePerson(person person) {
         try {
+            Connection connection = DBConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement("INSERT INTO Person (per_name, per_appat, per_ammat, per_email, per_password) VALUES (?, ?, ?, ?, ?)");
             statement.setString(1, person.getName());
             statement.setString(2, person.getAppat());
@@ -94,6 +99,8 @@ public class PersonDAO {
 
             resultSet.close();
             statement.close();
+            DBConnection.closeConnection(); // Close the connection
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

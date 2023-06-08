@@ -1,41 +1,23 @@
-<%@page import="Model.owner" %>
-<%@page import="Model.person"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <head>
-    <meta name="description" content="Web Application Veterinary Example">
-    <meta name="keywords" content="JSP,CSS,SCSS,XML,Java">
-    <meta name="author" content="Angel">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="custom.css">
-
-    <title>Inicio | Dr. Paws</title>
+    <title>Register | Dr. Paws</title>
 </head>
 <html lang="es">
 <body>
 <header>
     <nav>
         <ul>
-            <li><a href="index.jsp">Inicio</a></li>
-            <% owner owner = null;
-                if (owner != null) { %>
-            <li><a href="profile.jsp">Profile</a></li>
-            <% } %>
-            <%
-                if (owner != null) { %>
-            <li><a href="logout.jsp">Logout</a></li>
-            <% } %>
-            <%
-                if (owner != null) { %>
-            <li><a href="schedule.jsp">Schedule</a></li>
-            <% } %>
-            <%
-                if (owner == null) { %>
-            <li><a href="login.jsp">Login</a></li>
-            <% } %>
-            <% owner = null;
-                if (owner == null) { %>
+            <li><a href="index.jsp">Home</a></li>
+            <%-- Check if the user is logged in and display the appropriate navigation options, rembember to touch
+             this and decorate with bootstrap, someone has to do it, not me--%>
+            <% if (request.getSession().getAttribute("userId") == null) { %>
             <li><a href="register.jsp">Register</a></li>
+            <li><a href="login.jsp">Login</a></li>
+            <% } else { %>
+            <li><a href="logout.jsp">Logout</a></li>
+            <li><a href="profile.jsp">Profile</a></li>
+            <li><a href="Agenda.jsp">Agenda</a></li>
             <% } %>
             <li><a href="contact.jsp">Contact</a></li>
         </ul>
@@ -43,21 +25,26 @@
 </header>
 
 <main>
-    <form action="Persoan" id="formregister" method="post">
-        <h1>Registro</h1>
-        <label for="name">Nombre</label>
-        <input type="text" name="name" id="name" placeholder="Ingrese aquí el texto" required>
-        <label for="appat">Apellido paterno</label>
-        <input type="text" name="appat" id="appat" placeholder="Ingrese aquí el texto" required>
-        <label for="ammat">Apellido materno</label>
-        <input type="text" name="ammat" id="ammat" placeholder="Ingrese aquí el texto" required>
-        <label for="email">Correo</label>
-        <input type="email" name="email" id="email" placeholder="Correo" required>
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password" placeholder="Contraseña" required>
-        <label for="password2">Confirmar Contraseña</label>
-        <input type="password" name="password2" id="password2" placeholder="Confirmar Contraseña" required>
-        <input type="submit" value="Registrarse">
+    <h1>Register</h1>
+
+    <%-- Check if there is an error message and display it if available --%>
+    <% if (request.getAttribute("errorMessage") != null) { %>
+    <p><strong>Error:</strong> <%= request.getAttribute("errorMessage") %></p>
+    <% } %>
+
+    <form action="register" method="post">
+        <label for="name">Username:</label>
+        <input type="text" id="name" required><br>
+        <label for="appat">father's last name</label>
+        <input type="text" id="appat" name="appat" required><br>
+        <label for="ammat">mother's last name</label>
+        <input type="text" id="ammat" name="ammat" required><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <input type="submit" value="Register">
     </form>
 </main>
 

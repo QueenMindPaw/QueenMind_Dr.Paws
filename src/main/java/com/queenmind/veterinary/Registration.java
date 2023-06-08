@@ -1,6 +1,7 @@
 package com.queenmind.veterinary;
 
-import Model.DBConnection;
+import Model.PersonDAO;
+import Model.person;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,45 +9,41 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 @WebServlet("/register")
 public class Registration extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private PersonDAO personDAO; // Assuming you have a PersonDAO instance
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        // Initialize the personDAO instance with the established database connection
+        Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
+        System.out.println("DBConnection: " + connection);
+        personDAO = new PersonDAO(connection);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String name = request.getParameter("name");
         String appat = request.getParameter("appat");
         String ammat = request.getParameter("ammat");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Perform registration logic and database insertion
-        try {
-            Connection connection = DBConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO Person (per_name, per_appat, per_ammat, per_email, per_password) " +
-                            "VALUES (?, ?, ?, ?, ?)"
-            );
+        // Perform any necessary validation on the input fields
 
-            statement.setString(1, name);
-            statement.setString(2, appat);
-            statement.setString(3, ammat);
-            statement.setString(4, email);
-            statement.setString(5, password);
+        person person = new person();
+        person.setName(name);
+        person.setAppat(appat);
+        person.setAmmat(ammat);
+        person.setEmail(email);
+        person.setPassword(password);
 
-            statement.executeUpdate();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            request.setAttribute("errorMessage", "An error occurred during registration. Please try again.");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-            return;
-        }
+        person = personDAO.updatePerson(person);
 
-
-        // Redirect to the login page after successful registration
-        response.sendRedirect("login.jsp");
+        // Assuming the registration was successful, redirect to a success page
+        response.sendRedirect("success.jsp");
     }
 }

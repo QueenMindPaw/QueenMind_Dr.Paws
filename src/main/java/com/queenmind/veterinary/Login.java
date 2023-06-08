@@ -52,8 +52,7 @@ public class Login extends HttpServlet {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle any errors that occur during the login process
-            // You can redirect to an error page or show an error message to the user
+            // Handle any errors and redirect to an error page, someone place something funny here!!A
             request.setAttribute("errorMessage", "An error occurred during login. Please try again.");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }

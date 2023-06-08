@@ -10,33 +10,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="custom.css">
 
-    <title>Inicio | Dr. Paws</title>
+    <title>Home | Dr. Paws</title>
 </head>
 <html lang="es">
 <body>
 <header>
     <nav>
         <ul>
-            <li><a href="index.jsp">Inicio</a></li>
-            <% PersonDAO person = person.getPersonById();
-                if (owner != null) { %>
-            <li><a href="profile.jsp">Profile</a></li>
-            <% } %>
-            <%
-                if (owner != null) { %>
-            <li><a href="logout.jsp">Logout</a></li>
-            <% } %>
-            <%
-                if (owner != null) { %>
-            <li><a href="schedule.jsp">Schedule</a></li>
-            <% } %>
-            <%
-                if (owner == null) { %>
-            <li><a href="login.jsp">Login</a></li>
-            <% } %>
-            <% owner = null;
-                if (owner == null) { %>
+            <li><a href="index.jsp">Home</a></li>
+            <%-- Check if the user is logged in and display the appropriate navigation options, rembember to touch
+             this and decorate with bootstrap, someone has to do it, not me--%>
+            <% if (request.getSession().getAttribute("userId") == null) { %>
             <li><a href="register.jsp">Register</a></li>
+            <li><a href="login.jsp">Login</a></li>
+            <% } else { %>
+            <li><a href="logout.jsp">Logout</a></li>
+            <li><a href="profile.jsp">Profile</a></li>
+            <li><a href="Agenda.jsp">Agenda</a></li>
             <% } %>
             <li><a href="contact.jsp">Contact</a></li>
         </ul>
@@ -45,20 +35,11 @@
 
 <main>
     <h1 class="text-secondary">Bienvenido a Dr.Paws!</h1>
-    <%
-        owner = null;
-        HttpSession sesionusuario = request.getSession(true);
-        sesionusuario.getAttribute(String.valueOf(owner));
-
-        if (owner != null) {
-            out.println("Bienvenido " + owner.getNombre());
-        } else {
-            out.println("Bienvenido Invitado");
-        }
-    %>
+    <p class="text-secondary">Dr. Paws es una aplicación web que te permite agendar citas con tu veterinario de
+        confianza, además de poder ver tu historial de citas y tus mascotas registradas.</p>
 </main>
 
-<%-- hagan lo bonito del index xdxd --%>
+<%-- Make spmething quite good xdxd --%>
 
 <footer>
     <p>Dr. Paws &copy; 2021</p>

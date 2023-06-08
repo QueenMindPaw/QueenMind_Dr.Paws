@@ -6,7 +6,6 @@ public class DBConnection {
 
     private static Connection connection;
 
-    //definimos el constructor de la clase
     private DBConnection(){
 
     }
